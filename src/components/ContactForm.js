@@ -1,40 +1,35 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import axios from 'axios';
+import { useForm } from "react-hook-form"
 
-const ContactForm = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
 
-    const onSubmit = async (data) => {
-        try {
-            await axios.post('/.netlify/functions/submit-form', data);
-            alert('Message sent successfully!');
-        } catch (error) {
-            console.error('There was an error!', error);
-            alert('Failed to send message.');
-        }
-    };
+export default function App() {
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm()
+
+
+    const onSubmit = (data) => console.log(data)
+
+
+    console.log(watch("example")) // watch input value by passing the name of it
+
 
     return (
+        /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
         <form onSubmit={handleSubmit(onSubmit)}>
-            <label>
-                Name:
-                <input {...register('name', { required: 'Name is required' })} />
-                {errors.name && <span>{errors.name.message}</span>}
-            </label>
-            <label>
-                Email:
-                <input type="email" {...register('email', { required: 'Email is required' })} />
-                {errors.email && <span>{errors.email.message}</span>}
-            </label>
-            <label>
-                Message:
-                <textarea {...register('message', { required: 'Message is required' })} />
-                {errors.message && <span>{errors.message.message}</span>}
-            </label>
-            <button type="submit">Send</button>
-        </form>
-    );
-};
+            {/* register your input into the hook by invoking the "register" function */}
+            <input defaultValue="test" {...register("example")} />
 
-export default ContactForm;
+
+            {/* include validation with required or other standard HTML validation rules */}
+            <input {...register("exampleRequired", { required: true })} />
+            {/* errors will return when field validation fails  */}
+            {errors.exampleRequired && <span>This field is required</span>}
+
+
+            <input type="submit" />
+        </form>
+    )
+}
