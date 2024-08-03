@@ -9,21 +9,6 @@ build/
 *.env
 *.cache
 
-# Dependency directories
-jspm_packages/
-
-# Next.js build output
-.next/
-
-# Gatsby files
-.cache/
-public/
-
-# React Native
-.expo/
-*.expo
-*.expo-shared/
-
 # Mac system files
 .DS_Store
 
